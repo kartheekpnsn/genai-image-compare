@@ -56,7 +56,12 @@ export default function Rank() {
     <div className="page">
       <h1>Which image is better?</h1>
       <p className="muted">
-        Vote {totalVotes} / {target} {done ? "— round complete (keep going if you like)" : ""}
+        Vote {totalVotes} / {target}{" "}
+        {done && (
+          <span style={{ color: "var(--ms-green)", fontWeight: 600 }}>
+            ✓ Round complete — keep going if you like
+          </span>
+        )}
       </p>
       <div className="progress" style={{ marginBottom: 24 }}>
         <div style={{ width: `${pct}%` }} />
@@ -101,7 +106,7 @@ export default function Rank() {
       </div>
       <table className="table">
         <thead>
-          <tr><th>#</th><th>Model</th><th>ELO</th><th>W</th><th>L</th><th>Skips</th></tr>
+          <tr><th>#</th><th>Model</th><th>ELO</th><th>Games</th><th>W</th><th>L</th><th>Skips</th></tr>
         </thead>
         <tbody>
           {leaderboard.map((row) => (
@@ -109,6 +114,7 @@ export default function Rank() {
               <td>{row.rank}</td>
               <td>{row.model}</td>
               <td>{Math.round(row.rating)}</td>
+              <td>{row.games}</td>
               <td>{row.wins}</td>
               <td>{row.losses}</td>
               <td>{row.skips}</td>

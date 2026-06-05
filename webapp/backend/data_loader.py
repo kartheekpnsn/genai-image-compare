@@ -22,6 +22,7 @@ def load_prompts() -> dict[str, dict[str, str]]:
     return prompts
 
 
+@lru_cache(maxsize=1)
 def discover_models() -> list[str]:
     """Return sorted model names from the image subfolders."""
     return sorted(p.name for p in paths.IMAGES_DIR.iterdir() if p.is_dir())

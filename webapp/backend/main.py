@@ -74,12 +74,13 @@ def post_vote(req: VoteRequest) -> dict:
     resolved = _store.resolve(req.matchup_id, req.choice)
     if resolved is None:
         raise HTTPException(status_code=404, detail="Unknown matchup or choice")
+    prompt_id = resolved.get("prompt_id")
     if resolved["skipped"]:
         state = elo.record_vote(resolved["left_model"], resolved["right_model"],
-                                skipped=True)
+                                skipped=True, prompt_id=prompt_id)
     else:
         state = elo.record_vote(resolved["winner"], resolved["loser"],
-                                skipped=False)
+                                skipped=False, prompt_id=prompt_id)
     return {"state": state, "leaderboard": _leaderboard(state), "reveal": resolved}
 
 

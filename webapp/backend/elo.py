@@ -60,7 +60,9 @@ def reset_state() -> dict:
     return _write(fresh)
 
 
-def record_vote(winner: str, loser: str, *, skipped: bool) -> dict:
+def record_vote(
+    winner: str, loser: str, *, skipped: bool, prompt_id: str | None = None
+) -> dict:
     """Apply a vote (or skip) to disk-backed state and return the new state."""
     state = load_state()
     models = state["models"]
@@ -78,6 +80,6 @@ def record_vote(winner: str, loser: str, *, skipped: bool) -> dict:
         models[loser]["games"] += 1
     state["total_votes"] += 1
     state["history"].append(
-        {"winner": winner, "loser": loser, "skipped": skipped}
+        {"prompt_id": prompt_id, "winner": winner, "loser": loser, "skipped": skipped}
     )
     return _write(state)
