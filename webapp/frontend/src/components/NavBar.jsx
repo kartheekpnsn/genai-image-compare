@@ -7,6 +7,7 @@ export default function NavBar() {
       <NavLink to="/" end>Rank</NavLink>
       <NavLink to="/generate">Generate</NavLink>
       <NavLink to="/insights">Insights</NavLink>
+      <NavLink to="/leaderboard">Leaderboard</NavLink>
     </nav>
   );
 }
