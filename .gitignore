@@ -1,0 +1,23 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Environments
+.venv
+.env
+
+# macOS
+.DS_Store
+
+# Smoke-test outputs from running the generator scripts directly
+*_generated_image.png
+
+# Frontend dependencies
+node_modules/
+
+# Runtime ELO state (generated at runtime, not tracked)
+data/elo_state.json
