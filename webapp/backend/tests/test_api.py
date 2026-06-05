@@ -61,3 +61,28 @@ def test_reset_clears_votes(client):
     client.post("/api/vote", json={"matchup_id": m["matchup_id"], "choice": "left"})
     r = client.post("/api/reset")
     assert r.json()["total_votes"] == 0
+
+
+def test_generate_endpoint_uses_clients(client, monkeypatch):
+    from webapp.backend import main
+
+    fake = [
+        {"model": "GPT-Image", "image_b64": "abc", "seconds": 1.0, "error": None},
+    ]
+    monkeypatch.setattr(main, "_get_clients", lambda: {"GPT-Image": object()})
+    monkeypatch.setattr(main.generation, "generate_all", lambda prompt, clients: fake)
+
+    r = client.post("/api/generate", json={"prompt": "a fox"})
+    assert r.status_code == 200
+    assert r.json()["results"] == fake
+
+
+def test_generate_requires_prompt(client):
+    r = client.post("/api/generate", json={"prompt": "   "})
+    assert r.status_code == 422
+
+
+def test_insights_endpoint_returns_markdown(client):
+    r = client.get("/api/insights")
+    assert r.status_code == 200
+    assert "# 🖼️ Image Model Comparison" in r.json()["markdown"]

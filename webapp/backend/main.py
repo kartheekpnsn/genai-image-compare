@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+from functools import lru_cache
+
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
-from webapp.backend import data_loader, elo, matchups
+from webapp.backend import data_loader, elo, generation, matchups, paths
 
 app = FastAPI(title="GenAI Image Compare")
 _store = matchups.MatchupStore()
@@ -84,3 +86,28 @@ def post_vote(req: VoteRequest) -> dict:
 @app.post("/api/reset")
 def post_reset() -> dict:
     return elo.reset_state()
+
+
+class GenerateRequest(BaseModel):
+    prompt: str
+
+
+@lru_cache(maxsize=1)
+def _get_clients() -> dict:
+    return generation.build_clients()
+
+
+@app.post("/api/generate")
+def post_generate(req: GenerateRequest) -> dict:
+    prompt = req.prompt.strip()
+    if not prompt:
+        raise HTTPException(status_code=422, detail="Prompt must not be empty")
+    results = generation.generate_all(prompt, _get_clients())
+    return {"results": results}
+
+
+@app.get("/api/insights")
+def get_insights() -> dict:
+    if not paths.INSIGHTS_MD.exists():
+        raise HTTPException(status_code=404, detail="Insights file not found")
+    return {"markdown": paths.INSIGHTS_MD.read_text(encoding="utf-8")}
