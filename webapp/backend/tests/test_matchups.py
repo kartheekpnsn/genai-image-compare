@@ -29,17 +29,36 @@ def test_resolve_skip_returns_both_models_no_winner():
     }
 
 
-def test_prefers_least_seen_pair():
-    # Saturate every pair except (GPT-Image, MAI-Image-2e) in history.
+def test_no_repeat_within_72_combos():
+    # After 71 unique (prompt, pair) combos in history, the 72nd must be unseen.
     models = ["GPT-Image", "MAI-Image-2.5", "MAI-Image-2.5-Flash", "MAI-Image-2e"]
-    seen_pairs = [
-        ("GPT-Image", "MAI-Image-2.5"),
-        ("GPT-Image", "MAI-Image-2.5-Flash"),
-        ("MAI-Image-2.5", "MAI-Image-2.5-Flash"),
-        ("MAI-Image-2.5", "MAI-Image-2e"),
-        ("MAI-Image-2.5-Flash", "MAI-Image-2e"),
+    prompts = [f"prompt-{i}" for i in range(1, 13)]
+    import itertools
+    all_combos = [
+        (p, a, b)
+        for p in prompts
+        for a, b in itertools.combinations(models, 2)
     ]
-    history = [{"winner": a, "loser": b, "skipped": False} for a, b in seen_pairs] * 5
+    # fill history with the first 71 combos
+    history = [
+        {"prompt_id": p, "winner": a, "loser": b, "skipped": False}
+        for p, a, b in all_combos[:71]
+    ]
     store = matchups.MatchupStore()
-    chosen = store.choose_pair(models, history)
-    assert set(chosen) == {"GPT-Image", "MAI-Image-2e"}
+    p, left, right = store._choose(models, prompts, history)
+    missing_p, missing_a, missing_b = all_combos[71]
+    assert p == missing_p
+    assert {left, right} == {missing_a, missing_b}
+
+
+def test_no_repeat_in_20_sequential_creates():
+    store = matchups.MatchupStore()
+    history: list[dict] = []
+    seen: set[frozenset] = set()
+    for _ in range(20):
+        m = store.create(history)
+        key = frozenset({m["prompt_id"], m["left_model"], m["right_model"]})
+        assert key not in seen, f"Repeat: {m['prompt_id']} {m['left_model']} vs {m['right_model']}"
+        seen.add(key)
+        history.append({"prompt_id": m["prompt_id"], "winner": m["left_model"],
+                        "loser": m["right_model"], "skipped": False})

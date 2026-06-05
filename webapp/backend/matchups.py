@@ -17,26 +17,33 @@ class MatchupStore:
     def __init__(self) -> None:
         self._store: dict[str, dict] = {}
 
-    def choose_pair(self, models: list[str], history: list[dict]) -> tuple[str, str]:
-        """Pick the model pair that has appeared least often in history."""
-        counts: dict[frozenset[str], int] = {
-            frozenset(pair): 0 for pair in itertools.combinations(models, 2)
-        }
+    def _choose(self, models: list[str], prompts: list[str], history: list[dict]) -> tuple[str, str, str]:
+        """Pick an unseen (prompt, pair) combination; fall back to least-seen if all 72 done."""
+        seen: set[frozenset] = set()
+        counts: dict[frozenset, int] = {}
         for entry in history:
-            key = frozenset({entry["winner"], entry["loser"]})
-            if key in counts:
-                counts[key] += 1
-        fewest = min(counts.values())
-        candidates = [pair for pair, c in counts.items() if c == fewest]
-        chosen = list(random.choice(candidates))
-        random.shuffle(chosen)
-        return chosen[0], chosen[1]
+            key = frozenset({entry["prompt_id"], entry["winner"], entry["loser"]})
+            seen.add(key)
+            counts[key] = counts.get(key, 0) + 1
+
+        all_combos = [
+            frozenset({p, a, b})
+            for p in prompts
+            for a, b in itertools.combinations(models, 2)
+        ]
+        unseen = [c for c in all_combos if c not in seen]
+        pool = unseen if unseen else [min(all_combos, key=lambda c: counts.get(c, 0))]
+        chosen = random.choice(pool)
+        prompt_id = next(v for v in chosen if v in set(prompts))
+        pair = [v for v in chosen if v != prompt_id]
+        random.shuffle(pair)
+        return prompt_id, pair[0], pair[1]
 
     def create(self, history: list[dict]) -> dict:
         """Create a new matchup and store the hidden model mapping."""
         models = data_loader.discover_models()
-        prompt_id = random.choice(list(data_loader.load_prompts().keys()))
-        left, right = self.choose_pair(models, history)
+        prompts = list(data_loader.load_prompts().keys())
+        prompt_id, left, right = self._choose(models, prompts, history)
         matchup_id = uuid.uuid4().hex
         record = {
             "matchup_id": matchup_id,
