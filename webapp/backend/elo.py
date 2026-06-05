@@ -23,7 +23,7 @@ def update_ratings(winner: float, loser: float) -> tuple[float, float]:
     new_l = loser + K_FACTOR * (0.0 - exp_l)
     return new_w, new_l
 
-DEFAULT_TARGET = 36
+DEFAULT_TARGET = 20
 
 
 def _initial_state() -> dict:
