@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 
+import json
+
+from webapp.backend import data_loader, paths
+
 BASE_RATING = 1000.0
 K_FACTOR = 32.0
 
@@ -18,11 +22,6 @@ def update_ratings(winner: float, loser: float) -> tuple[float, float]:
     new_w = winner + K_FACTOR * (1.0 - exp_w)
     new_l = loser + K_FACTOR * (0.0 - exp_l)
     return new_w, new_l
-
-
-import json
-
-from webapp.backend import data_loader, paths
 
 DEFAULT_TARGET = 36
 
