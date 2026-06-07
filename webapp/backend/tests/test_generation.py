@@ -1,3 +1,5 @@
+import types
+
 from webapp.backend import generation
 
 
@@ -39,5 +41,4 @@ def test_generate_stream_is_a_generator():
     clients = {"M1": _FakeClient(b"\x89PNG")}
     result = generation.generate_stream("x", clients)
     # Must be a generator, not a list
-    import types
     assert isinstance(result, types.GeneratorType)

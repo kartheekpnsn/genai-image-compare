@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
+import json
 from functools import lru_cache
 
 from fastapi import FastAPI, HTTPException
-import json
 from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel
 

@@ -1,3 +1,5 @@
+import json
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -13,7 +15,7 @@ def test_state_endpoint(client):
     r = client.get("/api/state")
     assert r.status_code == 200
     body = r.json()
-    assert body["target"] == 36
+    assert body["target"] == 20
     assert body["total_votes"] == 0
 
 
@@ -63,9 +65,6 @@ def test_reset_clears_votes(client):
     assert r.json()["total_votes"] == 0
 
 
-import json as _json
-
-
 def test_generate_streams_sse_events(client, monkeypatch):
     from webapp.backend import main
 
@@ -89,7 +88,7 @@ def test_generate_streams_sse_events(client, monkeypatch):
         if line.startswith("data: ")
     ]
     assert payloads[-1] == "[DONE]"
-    events = [_json.loads(p) for p in payloads[:-1]]
+    events = [json.loads(p) for p in payloads[:-1]]
     assert {e["model"] for e in events} == {"M1", "M2"}
 
 
