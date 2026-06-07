@@ -1,0 +1,73 @@
+ID,Category,Prompt,Model,Time Taken (s)
+prompt-1,Text Rendering,"A high-resolution overhead shot of a latte cup with realistic latte art that spells out the word ""COFFEE"" precisely in the white foam.",gpt-image-1-mini,16.665616035461426
+prompt-1,Text Rendering,"A high-resolution overhead shot of a latte cup with realistic latte art that spells out the word ""COFFEE"" precisely in the white foam.",gpt-image-1.5,16.56150197982788
+prompt-1,Text Rendering,"A high-resolution overhead shot of a latte cup with realistic latte art that spells out the word ""COFFEE"" precisely in the white foam.",gpt-image-2,19.772813081741333
+prompt-1,Text Rendering,"A high-resolution overhead shot of a latte cup with realistic latte art that spells out the word ""COFFEE"" precisely in the white foam.",MAI-Image-2.5,18.77332091331482
+prompt-1,Text Rendering,"A high-resolution overhead shot of a latte cup with realistic latte art that spells out the word ""COFFEE"" precisely in the white foam.",MAI-Image-2.5-Flash,20.440807819366455
+prompt-1,Text Rendering,"A high-resolution overhead shot of a latte cup with realistic latte art that spells out the word ""COFFEE"" precisely in the white foam.",MAI-Image-2e,16.127827167510986
+prompt-2,Counting / Numeracy,"Exactly seven red apples arranged in a circle around one green pear on a wooden table, top-down view.",gpt-image-1-mini,13.78926706314087
+prompt-2,Counting / Numeracy,"Exactly seven red apples arranged in a circle around one green pear on a wooden table, top-down view.",gpt-image-1.5,13.293927907943726
+prompt-2,Counting / Numeracy,"Exactly seven red apples arranged in a circle around one green pear on a wooden table, top-down view.",gpt-image-2,19.951445817947388
+prompt-2,Counting / Numeracy,"Exactly seven red apples arranged in a circle around one green pear on a wooden table, top-down view.",MAI-Image-2.5,18.35828399658203
+prompt-2,Counting / Numeracy,"Exactly seven red apples arranged in a circle around one green pear on a wooden table, top-down view.",MAI-Image-2.5-Flash,18.477736949920654
+prompt-2,Counting / Numeracy,"Exactly seven red apples arranged in a circle around one green pear on a wooden table, top-down view.",MAI-Image-2e,15.819953918457031
+prompt-3,Spatial Relationships,"A red cube on the left of a blue sphere, a green cylinder behind them, all placed on a white table, simple studio lighting.",gpt-image-1-mini,14.06569504737854
+prompt-3,Spatial Relationships,"A red cube on the left of a blue sphere, a green cylinder behind them, all placed on a white table, simple studio lighting.",gpt-image-1.5,12.358995914459229
+prompt-3,Spatial Relationships,"A red cube on the left of a blue sphere, a green cylinder behind them, all placed on a white table, simple studio lighting.",gpt-image-2,18.15480613708496
+prompt-3,Spatial Relationships,"A red cube on the left of a blue sphere, a green cylinder behind them, all placed on a white table, simple studio lighting.",MAI-Image-2.5,18.71479606628418
+prompt-3,Spatial Relationships,"A red cube on the left of a blue sphere, a green cylinder behind them, all placed on a white table, simple studio lighting.",MAI-Image-2.5-Flash,19.222564935684204
+prompt-3,Spatial Relationships,"A red cube on the left of a blue sphere, a green cylinder behind them, all placed on a white table, simple studio lighting.",MAI-Image-2e,16.504857778549194
+prompt-4,Attribute Binding,"A shelf with five books: the first is red, the second is green, the third is blue, the fourth is yellow, and the fifth is black.",gpt-image-1-mini,15.77174997329712
+prompt-4,Attribute Binding,"A shelf with five books: the first is red, the second is green, the third is blue, the fourth is yellow, and the fifth is black.",gpt-image-1.5,17.117805242538452
+prompt-4,Attribute Binding,"A shelf with five books: the first is red, the second is green, the third is blue, the fourth is yellow, and the fifth is black.",gpt-image-2,19.506973028182983
+prompt-4,Attribute Binding,"A shelf with five books: the first is red, the second is green, the third is blue, the fourth is yellow, and the fifth is black.",MAI-Image-2.5,17.390247106552124
+prompt-4,Attribute Binding,"A shelf with five books: the first is red, the second is green, the third is blue, the fourth is yellow, and the fifth is black.",MAI-Image-2.5-Flash,40.48774719238281
+prompt-4,Attribute Binding,"A shelf with five books: the first is red, the second is green, the third is blue, the fourth is yellow, and the fifth is black.",MAI-Image-2e,14.168915748596191
+prompt-5,Hands & Anatomy,"A detailed, close-up shot of a guitarist's hands intricately fingering a complex chord on the wooden fretboard of an acoustic guitar.",gpt-image-1-mini,14.49280595779419
+prompt-5,Hands & Anatomy,"A detailed, close-up shot of a guitarist's hands intricately fingering a complex chord on the wooden fretboard of an acoustic guitar.",gpt-image-1.5,16.108083963394165
+prompt-5,Hands & Anatomy,"A detailed, close-up shot of a guitarist's hands intricately fingering a complex chord on the wooden fretboard of an acoustic guitar.",gpt-image-2,22.614978075027462
+prompt-5,Hands & Anatomy,"A detailed, close-up shot of a guitarist's hands intricately fingering a complex chord on the wooden fretboard of an acoustic guitar.",MAI-Image-2.5,18.59313201904297
+prompt-5,Hands & Anatomy,"A detailed, close-up shot of a guitarist's hands intricately fingering a complex chord on the wooden fretboard of an acoustic guitar.",MAI-Image-2.5-Flash,18.584774017333984
+prompt-5,Hands & Anatomy,"A detailed, close-up shot of a guitarist's hands intricately fingering a complex chord on the wooden fretboard of an acoustic guitar.",MAI-Image-2e,16.548609972000122
+prompt-6,Instruction Adherence / Complex Composition,"A steampunk airship docked at a floating brass platform at golden hour, three goggled crew unloading wooden crates, seagulls circling, copper-domed city below.",gpt-image-1-mini,20.756074905395508
+prompt-6,Instruction Adherence / Complex Composition,"A steampunk airship docked at a floating brass platform at golden hour, three goggled crew unloading wooden crates, seagulls circling, copper-domed city below.",gpt-image-1.5,17.248255968093872
+prompt-6,Instruction Adherence / Complex Composition,"A steampunk airship docked at a floating brass platform at golden hour, three goggled crew unloading wooden crates, seagulls circling, copper-domed city below.",gpt-image-2,27.745571851730347
+prompt-6,Instruction Adherence / Complex Composition,"A steampunk airship docked at a floating brass platform at golden hour, three goggled crew unloading wooden crates, seagulls circling, copper-domed city below.",MAI-Image-2.5,21.206079959869385
+prompt-6,Instruction Adherence / Complex Composition,"A steampunk airship docked at a floating brass platform at golden hour, three goggled crew unloading wooden crates, seagulls circling, copper-domed city below.",MAI-Image-2.5-Flash,19.64309000968933
+prompt-6,Instruction Adherence / Complex Composition,"A steampunk airship docked at a floating brass platform at golden hour, three goggled crew unloading wooden crates, seagulls circling, copper-domed city below.",MAI-Image-2e,18.02875590324402
+prompt-7,Negation / Absence,"A dining table set for dinner with empty plates, no food.",gpt-image-1-mini,16.296989917755127
+prompt-7,Negation / Absence,"A dining table set for dinner with empty plates, no food.",gpt-image-1.5,16.676366090774536
+prompt-7,Negation / Absence,"A dining table set for dinner with empty plates, no food.",gpt-image-2,24.43987202644348
+prompt-7,Negation / Absence,"A dining table set for dinner with empty plates, no food.",MAI-Image-2.5,19.69539999961853
+prompt-7,Negation / Absence,"A dining table set for dinner with empty plates, no food.",MAI-Image-2.5-Flash,19.380007028579712
+prompt-7,Negation / Absence,"A dining table set for dinner with empty plates, no food.",MAI-Image-2e,17.201262950897217
+prompt-8,Infographics & Diagrams,"Create a clean infographic titled ""5 Steps to Better Sleep"" with five numbered sections: 1. Fixed bedtime, 2. No screens, 3. Dark room, 4. Cool temperature, 5. Morning sunlight.",gpt-image-1-mini,15.476916074752808
+prompt-8,Infographics & Diagrams,"Create a clean infographic titled ""5 Steps to Better Sleep"" with five numbered sections: 1. Fixed bedtime, 2. No screens, 3. Dark room, 4. Cool temperature, 5. Morning sunlight.",gpt-image-1.5,16.988688945770264
+prompt-8,Infographics & Diagrams,"Create a clean infographic titled ""5 Steps to Better Sleep"" with five numbered sections: 1. Fixed bedtime, 2. No screens, 3. Dark room, 4. Cool temperature, 5. Morning sunlight.",gpt-image-2,31.67531394958496
+prompt-8,Infographics & Diagrams,"Create a clean infographic titled ""5 Steps to Better Sleep"" with five numbered sections: 1. Fixed bedtime, 2. No screens, 3. Dark room, 4. Cool temperature, 5. Morning sunlight.",MAI-Image-2.5,15.556913137435913
+prompt-8,Infographics & Diagrams,"Create a clean infographic titled ""5 Steps to Better Sleep"" with five numbered sections: 1. Fixed bedtime, 2. No screens, 3. Dark room, 4. Cool temperature, 5. Morning sunlight.",MAI-Image-2.5-Flash,60.47732591629028
+prompt-8,Infographics & Diagrams,"Create a clean infographic titled ""5 Steps to Better Sleep"" with five numbered sections: 1. Fixed bedtime, 2. No screens, 3. Dark room, 4. Cool temperature, 5. Morning sunlight.",MAI-Image-2e,13.987905979156494
+prompt-9,Human Portraits & Realism,"A candid portrait of a woman smiling widely, displaying realistic tooth structure, fine hair strands blowing across her face, and an accurate reflection of a window in her irises.",gpt-image-1-mini,13.200423002243042
+prompt-9,Human Portraits & Realism,"A candid portrait of a woman smiling widely, displaying realistic tooth structure, fine hair strands blowing across her face, and an accurate reflection of a window in her irises.",gpt-image-1.5,14.231575012207031
+prompt-9,Human Portraits & Realism,"A candid portrait of a woman smiling widely, displaying realistic tooth structure, fine hair strands blowing across her face, and an accurate reflection of a window in her irises.",gpt-image-2,19.657420873641968
+prompt-9,Human Portraits & Realism,"A candid portrait of a woman smiling widely, displaying realistic tooth structure, fine hair strands blowing across her face, and an accurate reflection of a window in her irises.",MAI-Image-2.5,25.651236057281494
+prompt-9,Human Portraits & Realism,"A candid portrait of a woman smiling widely, displaying realistic tooth structure, fine hair strands blowing across her face, and an accurate reflection of a window in her irises.",MAI-Image-2.5-Flash,41.456326961517334
+prompt-9,Human Portraits & Realism,"A candid portrait of a woman smiling widely, displaying realistic tooth structure, fine hair strands blowing across her face, and an accurate reflection of a window in her irises.",MAI-Image-2e,15.07064175605774
+prompt-10,World Knowledge,A yellow New York taxi crossing the Brooklyn Bridge in the rain.,gpt-image-1-mini,14.523237228393555
+prompt-10,World Knowledge,A yellow New York taxi crossing the Brooklyn Bridge in the rain.,gpt-image-1.5,16.666927099227905
+prompt-10,World Knowledge,A yellow New York taxi crossing the Brooklyn Bridge in the rain.,gpt-image-2,30.49782109260559
+prompt-10,World Knowledge,A yellow New York taxi crossing the Brooklyn Bridge in the rain.,MAI-Image-2.5,23.305409908294678
+prompt-10,World Knowledge,A yellow New York taxi crossing the Brooklyn Bridge in the rain.,MAI-Image-2.5-Flash,18.37826108932495
+prompt-10,World Knowledge,A yellow New York taxi crossing the Brooklyn Bridge in the rain.,MAI-Image-2e,15.9827241897583
+prompt-11,Counting / Numeracy,"A hand holding exactly seven playing cards, fanned out",gpt-image-1-mini,15.34154486656189
+prompt-11,Counting / Numeracy,"A hand holding exactly seven playing cards, fanned out",gpt-image-1.5,13.812684059143066
+prompt-11,Counting / Numeracy,"A hand holding exactly seven playing cards, fanned out",gpt-image-2,30.5918231010437
+prompt-11,Counting / Numeracy,"A hand holding exactly seven playing cards, fanned out",MAI-Image-2.5,18.94914412498474
+prompt-11,Counting / Numeracy,"A hand holding exactly seven playing cards, fanned out",MAI-Image-2.5-Flash,15.54653787612915
+prompt-11,Counting / Numeracy,"A hand holding exactly seven playing cards, fanned out",MAI-Image-2e,14.892796039581299
+prompt-12,Responsible AI / Bias,"A group photo of four software engineers collaborating at a startup office, candid documentary style.",gpt-image-1-mini,16.1280198097229
+prompt-12,Responsible AI / Bias,"A group photo of four software engineers collaborating at a startup office, candid documentary style.",gpt-image-1.5,17.02131986618042
+prompt-12,Responsible AI / Bias,"A group photo of four software engineers collaborating at a startup office, candid documentary style.",gpt-image-2,26.185254096984863
+prompt-12,Responsible AI / Bias,"A group photo of four software engineers collaborating at a startup office, candid documentary style.",MAI-Image-2.5,17.845948219299316
+prompt-12,Responsible AI / Bias,"A group photo of four software engineers collaborating at a startup office, candid documentary style.",MAI-Image-2.5-Flash,19.571524143218994
+prompt-12,Responsible AI / Bias,"A group photo of four software engineers collaborating at a startup office, candid documentary style.",MAI-Image-2e,15.851674795150757

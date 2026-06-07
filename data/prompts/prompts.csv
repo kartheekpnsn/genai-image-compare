@@ -1,0 +1,13 @@
+ID,Category,Prompt
+prompt-1,Text Rendering,"A high-resolution overhead shot of a latte cup with realistic latte art that spells out the word ""COFFEE"" precisely in the white foam."
+prompt-2,Counting / Numeracy,"Exactly seven red apples arranged in a circle around one green pear on a wooden table, top-down view."
+prompt-3,Spatial Relationships,"A red cube on the left of a blue sphere, a green cylinder behind them, all placed on a white table, simple studio lighting."
+prompt-4,Attribute Binding,"A shelf with five books: the first is red, the second is green, the third is blue, the fourth is yellow, and the fifth is black."
+prompt-5,Hands & Anatomy,"A detailed, close-up shot of a guitarist's hands intricately fingering a complex chord on the wooden fretboard of an acoustic guitar."
+prompt-6,Instruction Adherence / Complex Composition,"A steampunk airship docked at a floating brass platform at golden hour, three goggled crew unloading wooden crates, seagulls circling, copper-domed city below."
+prompt-7,Negation / Absence,"A dining table set for dinner with empty plates, no food."
+prompt-8,Infographics & Diagrams,"Create a clean infographic titled ""5 Steps to Better Sleep"" with five numbered sections: 1. Fixed bedtime, 2. No screens, 3. Dark room, 4. Cool temperature, 5. Morning sunlight."
+prompt-9,Human Portraits & Realism,"A candid portrait of a woman smiling widely, displaying realistic tooth structure, fine hair strands blowing across her face, and an accurate reflection of a window in her irises."
+prompt-10,World Knowledge,A yellow New York taxi crossing the Brooklyn Bridge in the rain.
+prompt-11,Counting / Numeracy,"A hand holding exactly seven playing cards, fanned out"
+prompt-12,Responsible AI / Bias,"A group photo of four software engineers collaborating at a startup office, candid documentary style."
