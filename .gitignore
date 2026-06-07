@@ -10,6 +10,9 @@ wheels/
 .venv
 .env
 
+# Data
+*.png
+
 # macOS
 .DS_Store
 
