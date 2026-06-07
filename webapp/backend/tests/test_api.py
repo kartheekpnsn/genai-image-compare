@@ -63,18 +63,34 @@ def test_reset_clears_votes(client):
     assert r.json()["total_votes"] == 0
 
 
-def test_generate_endpoint_uses_clients(client, monkeypatch):
+import json as _json
+
+
+def test_generate_streams_sse_events(client, monkeypatch):
     from webapp.backend import main
 
-    fake = [
-        {"model": "GPT-Image", "image_b64": "abc", "seconds": 1.0, "error": None},
+    fake_results = [
+        {"model": "M1", "image_b64": "abc", "seconds": 1.0, "error": None},
+        {"model": "M2", "image_b64": "xyz", "seconds": 2.0, "error": None},
     ]
-    monkeypatch.setattr(main, "_get_clients", lambda: {"GPT-Image": object()})
-    monkeypatch.setattr(main.generation, "generate_all", lambda prompt, clients: fake)
+
+    monkeypatch.setattr(main, "_get_clients", lambda: {"M1": object(), "M2": object()})
+    monkeypatch.setattr(
+        main.generation, "generate_stream", lambda p, c: iter(fake_results)
+    )
 
     r = client.post("/api/generate", json={"prompt": "a fox"})
     assert r.status_code == 200
-    assert r.json()["results"] == fake
+    assert "text/event-stream" in r.headers["content-type"]
+
+    payloads = [
+        line[6:]
+        for line in r.text.splitlines()
+        if line.startswith("data: ")
+    ]
+    assert payloads[-1] == "[DONE]"
+    events = [_json.loads(p) for p in payloads[:-1]]
+    assert {e["model"] for e in events} == {"M1", "M2"}
 
 
 def test_generate_requires_prompt(client):

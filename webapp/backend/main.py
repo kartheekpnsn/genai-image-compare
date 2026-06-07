@@ -5,7 +5,8 @@ from __future__ import annotations
 from functools import lru_cache
 
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse
+import json
+from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel
 
 from webapp.backend import data_loader, elo, generation, matchups, paths
@@ -99,12 +100,17 @@ def _get_clients() -> dict:
 
 
 @app.post("/api/generate")
-def post_generate(req: GenerateRequest) -> dict:
+def post_generate(req: GenerateRequest) -> StreamingResponse:
     prompt = req.prompt.strip()
     if not prompt:
         raise HTTPException(status_code=422, detail="Prompt must not be empty")
-    results = generation.generate_all(prompt, _get_clients())
-    return {"results": results}
+
+    def event_stream():
+        for result in generation.generate_stream(prompt, _get_clients()):
+            yield f"data: {json.dumps(result)}\n\n"
+        yield "data: [DONE]\n\n"
+
+    return StreamingResponse(event_stream(), media_type="text/event-stream")
 
 
 @app.get("/api/insights")
