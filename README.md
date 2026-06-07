@@ -1,93 +1,137 @@
 ---
 title: GenAI Image Compare
-description: Side-by-side benchmark of Azure GPT-Image and MAI image-generation models, with a class-based Python client, dotenv configuration, and UV package management.
+description: Side-by-side benchmark of Azure GPT-Image and MAI image-generation models with a voting-based ELO leaderboard and live generation UI.
 ---
 
 ## Overview
 
-This project benchmarks Azure image-generation models side by side on a shared set
-of prompts. Two thin clients wrap the Azure endpoints:
+A full-stack benchmarking tool for Azure image-generation models. Users vote on blind head-to-head matchups (which image looks better for a given prompt?), and an ELO rating system derives a live leaderboard from those votes. A separate **Generate** tab lets you enter any prompt and watch both models produce images side by side in real time via server-sent events.
+
+Two thin Python clients wrap the Azure endpoints:
 
 * `AzureGPTImageGenerator` — [src/genai_image_compare/gpt_image_generator.py](src/genai_image_compare/gpt_image_generator.py)
 * `AzureMAIGenerator` — [src/genai_image_compare/mai_generator.py](src/genai_image_compare/mai_generator.py)
 
-Both expose a `generate(prompt)` method that returns image bytes. The notebook
-[notebooks/compare_generators.ipynb](notebooks/compare_generators.ipynb) runs every
-model over the benchmark prompts in parallel, caches the rendered images, and records
-generation timings.
+Both expose a `generate(prompt)` method that returns image bytes. The original comparison notebook is still available at [notebooks/compare_generators.ipynb](notebooks/compare_generators.ipynb).
 
 ## Project Structure
 
 ```
 .
-├── src/genai_image_compare/   # Importable package: the two generator clients
+├── src/genai_image_compare/       # Importable package: GPT-Image and MAI clients
 │   ├── gpt_image_generator.py
 │   └── mai_generator.py
-├── notebooks/
-│   └── compare_generators.ipynb   # Side-by-side comparison + timing chart
+├── webapp/
+│   ├── backend/                   # FastAPI app
+│   │   ├── main.py                # API routes
+│   │   ├── elo.py                 # ELO rating math + persistent state
+│   │   ├── matchups.py            # In-memory matchup store
+│   │   ├── generation.py          # Parallel SSE generation stream
+│   │   ├── data_loader.py         # Prompt and image loading
+│   │   └── tests/                 # pytest suite
+│   └── frontend/                  # React + Vite app
+│       └── src/pages/
+│           ├── Rank.jsx           # Blind voting UI
+│           ├── Leaderboard.jsx    # ELO rankings table
+│           ├── Generate.jsx       # Live prompt-to-image generation
+│           └── Insights.jsx       # Model comparison writeup
 ├── data/
-│   ├── prompts/prompts.csv        # Benchmark prompts consumed by the notebook
-│   ├── images/<model>/<id>.png    # Cached generated images, one folder per model
-│   └── results/timing_results.csv # Per-model generation timings
-└── docs/
-    ├── INSIGHTS.md                # Model comparison summary
-    ├── prompts.md                 # Benchmark methodology + final prompt set
-    └── sources/                   # Raw per-source prompt suggestions
-        ├── claude.md
-        ├── gemini.md
-        └── gpt.md
+│   ├── prompts/prompts.csv        # Benchmark prompt set
+│   ├── images/<model>/<id>.png    # Cached generated images
+│   ├── results/timing_results.csv # Per-model generation timings
+│   └── elo_state.json             # Persisted ELO ratings and vote history
+├── notebooks/
+│   └── compare_generators.ipynb   # Original side-by-side notebook
+├── docs/
+│   └── INSIGHTS.md                # Qualitative model comparison
+├── .env.example                   # Template for required environment variables
+└── Makefile                       # install / backend / frontend / dev targets
 ```
 
 ## Prerequisites
 
 * Python 3.11+
+* Node.js 18+
 * [uv](https://docs.astral.sh/uv/)
 * An Azure AI resource with GPT-Image and/or MAI deployments
 
 ## Configuration
 
-Set values in `.env`:
-
-* `GPT_IMAGE_ENDPOINT` — GPT-Image generation endpoint
-* `MAI_ENDPOINT` — MAI generation endpoint
-* `MAI_MODEL` — MAI model name (default `MAI-Image-2.5`)
-* `AZURE_AUTH_SCOPE` — token scope (default `https://cognitiveservices.azure.com/.default`)
-* `AZURE_IMAGE_WIDTH`, `AZURE_IMAGE_HEIGHT` — image size (default `1024` x `1024`)
-* `AZURE_IMAGE_N` — number of images per prompt (default `1`)
-
-Authentication uses `DefaultAzureCredential`, so make sure you are logged in
-(e.g. `az login`) or have the appropriate environment credentials available.
-
-## Install Dependencies
+Copy `.env.example` to `.env` and fill in your Azure endpoints:
 
 ```bash
-uv sync
+cp .env.example .env
 ```
 
-This also installs the `genai_image_compare` package from `src/` into the
-environment, so the generators can be imported as
-`from genai_image_compare import AzureGPTImageGenerator, AzureMAIGenerator`.
+| Variable | Description |
+|---|---|
+| `GPT_IMAGE_ENDPOINT` | Azure OpenAI images endpoint (includes deployment name) |
+| `GPT_IMAGE_MODEL` | GPT-Image model name (default `gpt-image-2`) |
+| `MAI_ENDPOINT` | MAI generation endpoint |
+| `MAI_MODEL` | MAI model name (default `MAI-Image-2.5`) |
+| `AZURE_AUTH_SCOPE` | Token scope (default `https://cognitiveservices.azure.com/.default`) |
+| `AZURE_IMAGE_WIDTH` / `AZURE_IMAGE_HEIGHT` | Image dimensions (default `1024` × `1024`) |
+| `AZURE_IMAGE_N` | Images per prompt (default `1`) |
+
+Authentication uses `DefaultAzureCredential`. Run `az login` (or configure a managed identity / service principal) before starting the server.
+
+## Install
+
+```bash
+make install
+```
+
+This runs `uv sync` (Python deps + the `genai_image_compare` package) and `npm install` in the frontend.
 
 ## Run
 
-Run the full comparison from the notebook:
+### Full dev server (recommended)
+
+```bash
+make dev
+```
+
+Starts the FastAPI backend on **:8175** and the Vite frontend on **:5175** together. Open [http://localhost:5175](http://localhost:5175).
+
+### Backend or frontend separately
+
+```bash
+make backend    # FastAPI on :8175
+make frontend   # Vite on :5175
+```
+
+### Notebook
 
 ```bash
 uv run jupyter lab notebooks/compare_generators.ipynb
 ```
 
-Or smoke-test a single generator from the command line (writes a sample
-`*_generated_image.png` to the current directory, which is git-ignored):
+### Smoke-test a single generator
 
 ```bash
 uv run python src/genai_image_compare/gpt_image_generator.py
 uv run python src/genai_image_compare/mai_generator.py
 ```
 
-## Output
+Each writes a `*_generated_image.png` to the current directory (git-ignored).
 
-* Generated images are cached under `data/images/<model>/<prompt-id>.png`. The
-  notebook skips regenerating an image if it already exists.
-* Per-model generation timings are written to `data/results/timing_results.csv`
-  and summarized in a bar chart at the end of the notebook.
-* See [docs/INSIGHTS.md](docs/INSIGHTS.md) for a qualitative model comparison.
+## API Routes
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/api/matchup` | Get a new blind head-to-head matchup |
+| `GET` | `/api/matchup-image/{id}/{side}` | Serve a matchup image |
+| `POST` | `/api/vote` | Record a vote; returns updated ELO state |
+| `GET` | `/api/leaderboard` | Current ELO rankings |
+| `GET` | `/api/state` | Full ELO state JSON |
+| `POST` | `/api/reset` | Reset all ratings and history |
+| `POST` | `/api/generate` | Stream image generation (SSE) for both models |
+| `GET` | `/api/insights` | Return `docs/INSIGHTS.md` as JSON |
+
+## Tests
+
+```bash
+uv run pytest
+```
+
+Tests live in `webapp/backend/tests/`.
