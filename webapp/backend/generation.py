@@ -5,6 +5,7 @@ from __future__ import annotations
 import base64
 import os
 import time
+from collections.abc import Iterator
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from dotenv import load_dotenv
@@ -63,9 +64,9 @@ def _run_one(model: str, client: object, prompt: str) -> dict:
                 "seconds": round(time.time() - start, 2), "error": str(error)}
 
 
-def generate_stream(prompt: str, clients: dict[str, object]):
+def generate_stream(prompt: str, clients: dict[str, object]) -> Iterator[dict]:
     """Yield one result dict per model in completion order; never raises."""
-    with ThreadPoolExecutor(max_workers=len(clients)) as executor:
+    with ThreadPoolExecutor(max_workers=max(1, len(clients))) as executor:
         future_to_model = {
             executor.submit(_run_one, model, client, prompt): model
             for model, client in clients.items()

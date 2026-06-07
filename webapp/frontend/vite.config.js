@@ -6,7 +6,15 @@ export default defineConfig({
   server: {
     port: 5175,
     proxy: {
-      "/api": "http://localhost:8175",
+      "/api": {
+        target: "http://localhost:8175",
+        changeOrigin: true,
+        configure: (proxy) => {
+          proxy.on("proxyRes", (proxyRes) => {
+            proxyRes.headers["x-accel-buffering"] = "no";
+          });
+        },
+      },
     },
   },
 });

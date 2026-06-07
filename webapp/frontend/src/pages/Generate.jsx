@@ -24,7 +24,8 @@ export default function Generate() {
       const decoder = new TextDecoder();
       let buffer = "";
 
-      while (true) {
+      let streamDone = false;
+      while (!streamDone) {
         const { done, value } = await reader.read();
         if (done) break;
         buffer += decoder.decode(value, { stream: true });
@@ -34,13 +35,14 @@ export default function Generate() {
           if (!line.startsWith("data: ")) continue;
           const payload = line.slice(6).trim();
           if (payload === "[DONE]") {
-            reader.cancel();
+            streamDone = true;
             break;
           }
           const result = JSON.parse(payload);
           setResults((prev) => [...prev, result]);
         }
       }
+      await reader.cancel();
     } catch (e) {
       setError(e.message);
     } finally {
