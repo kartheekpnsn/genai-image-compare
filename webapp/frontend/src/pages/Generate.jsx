@@ -3,7 +3,6 @@ import { useState } from "react";
 export default function Generate() {
   const [prompt, setPrompt] = useState("");
   const [results, setResults] = useState([]);
-  const [pending, setPending] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -12,7 +11,6 @@ export default function Generate() {
     setLoading(true);
     setError(null);
     setResults([]);
-    setPending(6);
 
     try {
       const r = await fetch("/api/generate", {
@@ -36,12 +34,11 @@ export default function Generate() {
           if (!line.startsWith("data: ")) continue;
           const payload = line.slice(6).trim();
           if (payload === "[DONE]") {
-            setLoading(false);
-            return;
+            reader.cancel();
+            break;
           }
           const result = JSON.parse(payload);
           setResults((prev) => [...prev, result]);
-          setPending((p) => p - 1);
         }
       }
     } catch (e) {
@@ -85,7 +82,7 @@ export default function Generate() {
           <div className="card" key={res.model}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12 }}>
               <p style={{ fontWeight: 600, margin: 0, fontSize: 16 }}>{res.model}</p>
-              {res.seconds && <span className="muted" style={{ fontSize: 13 }}>{res.seconds}s</span>}
+              {res.seconds != null && <span className="muted" style={{ fontSize: 13 }}>{res.seconds}s</span>}
             </div>
             {res.image_b64 ? (
               <img
